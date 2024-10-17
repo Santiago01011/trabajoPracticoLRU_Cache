@@ -19,6 +19,9 @@ typedef struct
 
 void crear_lrucache(t_lru_cache* pc, size_t ce);
 int agregar_lrucache(t_lru_cache* pc, const void* dato, size_t tam,int cmp(const void*, const void*));
+int obtener_lrucache(t_lru_cache* pc, void* dato, size_t tam, int cmp(const void*, const void*));
+int borrar_lrucache(t_lru_cache* pc, void* dato, size_t tam, int cmp(const void*, const void*));
+void vaciar_lrucache(t_lru_cache* pc);
 void map_cache(t_lru_cache* pc, void accion(void*,void*), void* param);
 
 #endif // LIB_H_INCLUDED

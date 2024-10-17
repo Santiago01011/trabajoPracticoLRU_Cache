@@ -1,6 +1,4 @@
 #include "funciones_para_genericos.h"
-
-
 /*
 int cmpint(const void* a, const void* b)
 {
