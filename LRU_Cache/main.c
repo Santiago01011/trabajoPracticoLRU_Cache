@@ -2,8 +2,39 @@
 #include "lib.h"
 #include "funciones_para_genericos.h"
 
+
+//funcion que transforma un archivo .csv a .bin con estructura tTweet
+void transformarCsvABin(){
+    FILE* lp = fopen("lote_pruebas.csv","rt");
+    FILE* bp = fopen("lote_pruebas.bin","wb");
+    tTweet tweet;
+    char linea[200];
+    if (lp == NULL || bp == NULL) {
+        printf("Error al abrir los archivos.\n");
+        fclose(lp);
+        fclose(bp);
+        return;
+    }
+
+    while (fgets(linea, sizeof(linea), lp)) {
+        // Parsear la línea del CSV
+        sscanf(linea, "%d;%140[^\n]", &tweet.id, &tweet.texto);
+        // Escribir la estructura en el archivo binario
+        fwrite(&tweet, sizeof(tTweet), 1, bp);
+    }
+
+    fclose(lp);
+    fclose(bp);
+
+
+
+}
+
+
 int main()
 {
+
+    transformarCsvABin();
     int i;
     t_lru_cache cacheper;
     tPersona persona,
