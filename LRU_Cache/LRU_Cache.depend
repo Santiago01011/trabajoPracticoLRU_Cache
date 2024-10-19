@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1729312932 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\repgit\trabajopracticolru_cache\lru_cache\funciones_para_genericos.c
+	"funciones_para_genericos.h"
+	<stdio.h>
+
+1729312934 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\repgit\trabajopracticolru_cache\lru_cache\funciones_para_genericos.h
+
+1729289760 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\repgit\trabajopracticolru_cache\lru_cache\lib.c
+	"lib.h"
+
+1729146146 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\repgit\trabajopracticolru_cache\lru_cache\lib.h
+	<stdlib.h>
+	<string.h>
+
+1729315079 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\repgit\trabajopracticolru_cache\lru_cache\main.c
+	<stdio.h>
+	<time.h>
+	"lib.h"
+	"funciones_para_genericos.h"
+

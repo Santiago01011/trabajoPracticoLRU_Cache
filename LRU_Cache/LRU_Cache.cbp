@@ -31,10 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../listaSimpleEnlazada/listaEnlazada.c">
+		<Unit filename="funciones_para_genericos.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../listaSimpleEnlazada/listaEnlazada.h" />
+		<Unit filename="funciones_para_genericos.h" />
+		<Unit filename="lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lib.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

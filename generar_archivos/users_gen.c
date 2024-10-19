@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#define TAM_USUARIO 15
-#define TAM_FEED 20
+#define TAM_USUARIO 15      //tamaño máximo del nombre de cada usuario
+#define TAM_FEED 20         //cantidad de tweets en cada feed
 #define NUM_REGISTROS 2000
 #define MAX_TWEET 50000
 
@@ -34,7 +34,7 @@ int main() {
     }
 
     // Abrir el archivo para escritura en modo binario
-    sprintf(filename,"%dusuarios_%drango.bin",NUM_REGISTROS, MAX_TWEET);
+    sprintf(filename,"../archivos/%dusuarios_%drango.bin",NUM_REGISTROS, MAX_TWEET);
     archivo = fopen(filename, "wb");
     if (archivo == NULL) {
         perror("No se pudo abrir el archivo");
@@ -45,7 +45,7 @@ int main() {
     fwrite(registros, sizeof(Registro), NUM_REGISTROS, archivo);
     fclose(archivo);
 
-    printf("Archivo '%s' creado con %d registros.\n", filename, NUM_REGISTROS);
+    printf("Archivo creado con %d registros.\n", NUM_REGISTROS);
     /*
     int i,num;
     for (i=0;i< NUM_REGISTROS;i++)

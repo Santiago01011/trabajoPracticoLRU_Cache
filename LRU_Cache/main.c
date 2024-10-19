@@ -3,13 +3,13 @@
 #include "lib.h"
 #include "funciones_para_genericos.h"
 
-#define FILENAME_USUARIOS "4000usuarios_200rango.bin"
-#define FILENAME_TWEETS "tweets.bin"
+#define FILENAME_USUARIOS "../archivos/4000usuarios_200rango.bin"
+#define FILENAME_TWEETS "../archivos/tweets.bin"
 #define TAM_CACHE 150
 
 int main()
 {
-
+/*
     clock_t start, end;
     double tiempo_total;
     int i;
@@ -49,8 +49,8 @@ int main()
     fclose(pft);
     tiempo_total = ((double)(end - start)) / CLOCKS_PER_SEC;
     printf("Tiempo de procesamiento: %f segundos\n", tiempo_total);
+*/
 
-/*
     clock_t start, end;
     double tiempo_total;
     int i;
@@ -100,6 +100,6 @@ int main()
     fclose(pft);
     tiempo_total = ((double)(end - start)) / CLOCKS_PER_SEC;
     printf("Tiempo de procesamiento: %f segundos\n", tiempo_total);
-*/
+
     return 0;
 }
