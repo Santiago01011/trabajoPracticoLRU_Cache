@@ -1,14 +1,14 @@
 #ifndef FUNCIONES_PARA_GENERICOS_H_INCLUDED
 #define FUNCIONES_PARA_GENERICOS_H_INCLUDED
 
-#include <stdio.h>
-#define TAM_MAX_APE 30
+#define TAM_APE 30
+#define TAM_USUARIO 15
+#define TAM_FEED 20
 
-typedef struct
-{
-    unsigned dni;
-    char apellido[TAM_MAX_APE];
-}tPersona;
+typedef struct {
+    char usuario[TAM_USUARIO];
+    int feed[TAM_FEED];
+}tRegistro;
 
 typedef struct
 {
@@ -16,9 +16,16 @@ typedef struct
     char texto[141];
 }tTweet;
 
-//int cmpint(const void* a, const void* b);
-//void printInt(void* elem, void* param);
+typedef struct
+{
+    unsigned dni;
+    char apellido[TAM_APE];
+}tPersona;
+
 int cmpdni(const void* a,const void* b);
+int cmpidtw(const void* a,const void* b);
 void printPersona(void* pv, void* param);
+void printTweet(void* pinfo, void* param);
+void printUsuario(void* pinfo, void* param);
 
 #endif // FUNCIONES_PARA_GENERICOS_H_INCLUDED

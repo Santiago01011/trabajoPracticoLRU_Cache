@@ -7,18 +7,6 @@ void crear_lrucache(t_lru_cache* pc, size_t ce)//pc: puntero a la cache
     pc->ce_max = ce;
 }
 
-
-/*
-para agregar primero habia pensado en buscar si el elemento existe en la cache y moverlo al principio
-cambiando solo los punteros.
-de esa forma me evitaba el tener que agregar un elemento que ya existia y borrar su version vieja
-
-termine descartando eso porque segun el enunciado "Si el dato ya existía (misma clave), es
-reemplazado y queda al principio del set de datos", lo que me dio a entender que, por ejemplo, para la
-estructura de persona que declare en el .h se podria dar la situacion de que en la cache exista alguien
-con DNI 123 y apellido Lopez, y luego se quiera agregar a alguien con DNI 123 (el mismo) pero apellido Perez,
-por lo que mover los punteros no me seria suficiente porque, si bien la clave es la misma, el resto cambia
-*/
 int agregar_lrucache(t_lru_cache* pc, const void* dato, size_t tam,int cmp(const void*, const void*))
 {
     tNodo* nue,
