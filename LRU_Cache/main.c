@@ -3,13 +3,14 @@
 #include "lib.h"
 #include "funciones_para_genericos.h"
 
-#define FILENAME_USUARIOS "../archivos/4000usuarios_200rango.bin"
+#define FILENAME_USUARIOS "../archivos/100000usuarios_50rango.bin"
 #define FILENAME_TWEETS "../archivos/tweets.bin"
-#define TAM_CACHE 150
+#define TAM_CACHE 50
 
 int main()
 {
-/*
+///IMPLEMENTACIÓN SIN CACHÉ
+ /*
     clock_t start, end;
     double tiempo_total;
     int i;
@@ -25,7 +26,6 @@ int main()
     if(!pft)
     {
         fclose(pfu);
-        fclose(pft);
         return 2;
     }
 
@@ -49,8 +49,10 @@ int main()
     fclose(pft);
     tiempo_total = ((double)(end - start)) / CLOCKS_PER_SEC;
     printf("Tiempo de procesamiento: %f segundos\n", tiempo_total);
-*/
+// */
 
+///IMPLEMENTACIÓN CON CACHÉ
+// /*
     clock_t start, end;
     double tiempo_total;
     int i;
@@ -67,7 +69,6 @@ int main()
     if(!pft)
     {
         fclose(pfu);
-        fclose(pft);
         return 2;
     }
 
@@ -100,6 +101,44 @@ int main()
     fclose(pft);
     tiempo_total = ((double)(end - start)) / CLOCKS_PER_SEC;
     printf("Tiempo de procesamiento: %f segundos\n", tiempo_total);
+// */
+
+///PRUEBA DE CACHÉ CON ESTRUCTURA DE PERSONA
+ /*
+int i;
+    t_lru_cache cacheper;
+    tPersona persona,
+             vecpersonas[] = {{44391303,"Naspleda"},
+                              {44525943,"Sapata"},
+                              {43407685,"Maudet"},
+                              {44525943,"Zapata"}};
+
+    crear_lrucache(&cacheper,10);
+    for (i=0;i<(int)((sizeof(vecpersonas)/sizeof(tPersona)));i++)
+        agregar_lrucache(&cacheper,&vecpersonas[i],sizeof(tPersona),cmpdni);
+    map_cache(&cacheper,printPersona,NULL);
+
+    persona.dni = 44391303;
+    printf("\n\nObtengo la persona con DNI %d\n",persona.dni);
+    if(obtener_lrucache(&cacheper,&persona,sizeof(tPersona),cmpdni))
+        printPersona(&persona,NULL);
+    else
+        puts("Persona no encontrada.");
+    printf("\nAhora la cache queda ordenada asi:\n");
+    map_cache(&cacheper,printPersona,NULL);
+
+    persona.dni = 44525943;
+    printf("\n\nElimino la persona con DNI %d\n",persona.dni);
+    if(borrar_lrucache(&cacheper,&persona,sizeof(tPersona),cmpdni))
+        printPersona(&persona,NULL);
+    else
+        puts("Persona no encontrada.");
+    printf("\nAhora la cache queda asi:\n");
+    map_cache(&cacheper,printPersona,NULL);
+
+    vaciar_lrucache(&cacheper);
+    map_cache(&cacheper,printPersona,NULL);//no deberia mostrar nada
+// */
 
     return 0;
 }
