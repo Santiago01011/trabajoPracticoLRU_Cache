@@ -1,20 +1,29 @@
 # depslib dependency file v1.0
-1729937246 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\main.c
+1731004727 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\main.c
 	<stdio.h>
-	<time.h>
+	"lib.h"
+	"cache.h"
+
+1731004711 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.h
+
+1731004748 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.c
 	"lib.h"
 	"funciones_para_genericos.h"
-
-1729146146 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.h
-	<stdlib.h>
+	"cache.h"
+	<time.h>
+	<stdio.h>
 	<string.h>
 
-1729289760 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.c
-	"lib.h"
-
-1729312934 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\funciones_para_genericos.h
+1730993181 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\funciones_para_genericos.h
 
 1729312932 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\funciones_para_genericos.c
 	"funciones_para_genericos.h"
 	<stdio.h>
+
+1730993153 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\cache.c
+	"cache.h"
+
+1730993176 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\cache.h
+	<stdlib.h>
+	<string.h>
 

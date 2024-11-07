@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cache.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cache.h" />
 		<Unit filename="funciones_para_genericos.c">
 			<Option compilerVar="CC" />
 		</Unit>

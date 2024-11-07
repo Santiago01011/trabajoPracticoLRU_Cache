@@ -1,114 +1,161 @@
 #include "lib.h"
-#define MIN(x,y) ((x) < (y) ? (x) : (y))
+#include "funciones_para_genericos.h"
+#include "cache.h"
+#include <time.h>
+#include <stdio.h>
+#include <string.h>
 
-void crear_lrucache(t_lru_cache* pc, size_t ce)//pc: puntero a la cache
+int procesar_sin_cache(char* fileUsuarios, char* fileTweets)
 {
-    pc->pri = NULL;
-    pc->ce_max = ce;
+    clock_t start, end;
+    double tiempo_total;
+    int i;
+    FILE* pfu, //puntero a file de usuarios
+        * pft; //puntero a file de tweets
+    tRegistro registro;
+    tTweet tweet;
+    char pathUsuarios[70] = "../archivos/",
+         pathTweets[70] = "../archivos/";
+
+    strcat(pathUsuarios,fileUsuarios);
+    strcat(pathTweets,fileTweets);
+
+    pfu = fopen(pathUsuarios,"rb");
+    if(!pfu)
+        return 1;
+    pft = fopen(pathTweets,"rb");
+    if(!pft)
+    {
+        fclose(pfu);
+        return 2;
+    }
+
+    start = clock();
+
+    fread(&registro,sizeof(tRegistro),1,pfu);
+    while(!feof(pfu))
+    {
+        //printf("\n%s:\n",registro.usuario);
+        for (i=0;i<TAM_FEED;i++)
+        {
+            fseek(pft,registro.feed[i]*sizeof(tTweet),SEEK_SET);
+            fread(&tweet,sizeof(tTweet),1,pft);
+            //printTweet(&tweet,NULL);
+        }
+        fread(&registro,sizeof(tRegistro),1,pfu);
+        //system("pause");
+    }
+    end = clock();
+    fclose(pfu);
+    fclose(pft);
+    tiempo_total = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("%f segundos", tiempo_total);
+
+    return 0;//OK
 }
 
-int agregar_lrucache(t_lru_cache* pc, const void* dato, size_t tam,int cmp(const void*, const void*))
+int procesar_con_cache(char* fileUsuarios, char* fileTweets, unsigned tamCache)
 {
-    tNodo* nue,
-         * elim;
-    tNodo** pl; //puntero a puntero a nodo con el que se recorre la lista
-    int rcmp;
-    size_t numelem = 1;
+    clock_t start, end;
+    double tiempo_total;
+    int i;
+    FILE* pfu, //puntero a file de usuarios
+        * pft; //puntero a file de tweets
+    tRegistro registro;
+    tTweet tweet;
+    t_lru_cache cache;
+    char pathUsuarios[70] = "../archivos/",
+         pathTweets[70] = "../archivos/";
 
-    nue = malloc(sizeof(tNodo));
-    if(!nue)
-        return 0; //sin memoria
-    nue->info = malloc(tam);
-    if(!nue->info)
-    {
-        free(nue);
-        return 0; //sin memoria
-    }
-    //inserto al principio
-    memcpy(nue->info,dato,tam);
-    nue->tamInfo = tam;
-    nue->sig = pc->pri;
-    pc->pri = nue;
+    strcat(pathUsuarios,fileUsuarios);
+    strcat(pathTweets,fileTweets);
 
-    pl = &(nue->sig);
-    if(!*pl)
-        return 1;//el elemento agregado es el primero de la lista
+    pfu = fopen(pathUsuarios,"rb");
+    if(!pfu)
+        return 1;
+    pft = fopen(pathTweets,"rb");
+    if(!pft)
+    {
+        fclose(pfu);
+        return 2;
+    }
 
-    while((rcmp = cmp(dato,(*pl)->info)) && ((*pl)->sig))
+    crear_lrucache(&cache,tamCache);
+
+    start = clock();
+
+    fread(&registro,sizeof(tRegistro),1,pfu);
+    while(!feof(pfu))
     {
-        pl = &(*pl)->sig;
-        numelem++;
+        //printf("\n%s:\n",registro.usuario);
+        for (i=0;i<TAM_FEED;i++)
+        {
+            tweet.id = registro.feed[i];
+            if(!obtener_lrucache(&cache,&tweet,sizeof(tTweet),cmpidtw))
+            {
+                fseek(pft,registro.feed[i]*sizeof(tTweet),SEEK_SET);
+                fread(&tweet,sizeof(tTweet),1,pft);
+                agregar_lrucache(&cache,&tweet,sizeof(tTweet),cmpidtw);
+            }
+            //printTweet(&tweet,NULL);
+        }
+        fread(&registro,sizeof(tRegistro),1,pfu);
+        //system("pause");
     }
-    if(!rcmp || numelem == pc->ce_max)//si el elemento ya existia en la cache o la cache se desbordo
-    {
-        elim = *pl;
-        *pl = elim->sig;
-        free(elim->info);
-        free(elim);
-    }
-    return 1;
+    end = clock();
+    //map_cache(&cache,printTweet,NULL);
+    vaciar_lrucache(&cache);
+    fclose(pfu);
+    fclose(pft);
+    tiempo_total = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("%f segundos", tiempo_total);
+
+    return 0;
 }
 
-int obtener_lrucache(t_lru_cache* pc, void* dato, size_t tam, int cmp(const void*, const void*))
+void test_cache()
 {
-    tNodo* bus;
-    tNodo** pl = &(pc->pri);
+    int i;
+    t_lru_cache cacheper;
+    tPersona persona,
+             vecpersonas[] = {{44391303,"Naspleda"},
+                              {44525943,"Sapata"},
+                              {43407685,"Maudet"},
+                              {44525943,"Zapata"}};
 
-    while((*pl) && (cmp(dato,(*pl)->info)))
-        pl = &(*pl)->sig;
+    crear_lrucache(&cacheper,10);
+    for (i=0;i<(int)((sizeof(vecpersonas)/sizeof(tPersona)));i++)
+        agregar_lrucache(&cacheper,&vecpersonas[i],sizeof(tPersona),cmpdni);
+    map_cache(&cacheper,printPersona,NULL);
 
-    if(!*pl)
-        return 0; //no encontrado
+    persona.dni = 44391303;
+    printf("\n\nObtengo la persona con DNI %d\n",persona.dni);
+    if(obtener_lrucache(&cacheper,&persona,sizeof(tPersona),cmpdni))
+        printPersona(&persona,NULL);
+    else
+        puts("Persona no encontrada.");
+    printf("\nAhora la cache queda ordenada asi:\n");
+    map_cache(&cacheper,printPersona,NULL);
 
-    bus = *pl;
-    *pl = bus->sig;
-    bus->sig = pc->pri;
-    pc->pri = bus;
-    memcpy(dato,bus->info,MIN(tam,bus->tamInfo));
+    persona.dni = 44525943;
+    printf("\n\nElimino la persona con DNI %d\n",persona.dni);
+    if(borrar_lrucache(&cacheper,&persona,sizeof(tPersona),cmpdni))
+        printPersona(&persona,NULL);
+    else
+        puts("Persona no encontrada.");
+    printf("\nAhora la cache queda asi:\n");
+    map_cache(&cacheper,printPersona,NULL);
 
-    return 1;
+    vaciar_lrucache(&cacheper);
+    map_cache(&cacheper,printPersona,NULL);//no deberia mostrar nada
 }
 
-int borrar_lrucache(t_lru_cache* pc, void* dato, size_t tam, int cmp(const void*, const void*))
+void printline()
 {
-    tNodo* elim;
-    tNodo** pl = &(pc->pri);
+    int i;
 
-    while((*pl) && (cmp(dato,(*pl)->info)))
-        pl = &(*pl)->sig;
-
-    if(!*pl)
-        return 0; //no encontrado
-
-    elim = *pl;
-    *pl = elim->sig;
-    memcpy(dato,elim->info,MIN(tam,elim->tamInfo));
-    free(elim->info);
-    free(elim);
-
-    return 1;
-}
-
-void vaciar_lrucache(t_lru_cache* pc)
-{
-    tNodo* elim;
-
-    while(pc->pri)
-    {
-        elim = pc->pri;
-        pc->pri = elim->sig;
-        free(elim->info);
-        free(elim);
-    }
-}
-
-void map_cache(t_lru_cache* pc, void accion(void*,void*), void* param)
-{
-//recorrer la lista y hacer algo con cada elemento
-    tNodo** pl = &(pc->pri);
-    while(*pl)
-    {
-        accion((*pl)->info,param);
-        pl = &(*pl)->sig;
-    }
+    printf("\n");
+    for (i=0;i<70;i++)
+        printf("-");
+    printf("\n");
 }

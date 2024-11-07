@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define TAM_USUARIO 15
 #define TAM_FEED 20
-#define FILENAME "../archivos/100000usuarios_50rango.bin"
+#define FILENAME "../archivos/100usuarios_0min_49999max_300salto.bin"
 
 typedef struct {
     char usuario[TAM_USUARIO]; // 14 caracteres + 1 para el null terminator
@@ -12,7 +12,7 @@ typedef struct {
 typedef struct
 {
     unsigned id;
-    char texto[141];
+    char texto[4092];
 }tTweet;
 
 void printTweet(tTweet* ptw);
@@ -23,7 +23,7 @@ int main()
     tRegistro registro;
     tTweet tweet;
 
-    FILE* pf = fopen("../archivos/tweets.bin","rb");
+    FILE* pf = fopen("../archivos/test_data.bin","rb");
     if(!pf)
         puts("Error");
 
