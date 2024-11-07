@@ -12,7 +12,7 @@ typedef struct {
 typedef struct
 {
     unsigned id;
-    char texto[4092];
+    char texto[141];
 }tTweet;
 
 void printTweet(tTweet* ptw);
@@ -23,7 +23,7 @@ int main()
     tRegistro registro;
     tTweet tweet;
 
-    FILE* pf = fopen("../archivos/test_data.bin","rb");
+    FILE* pf = fopen("../archivos/tweets.bin","rb");
     if(!pf)
         puts("Error");
 
