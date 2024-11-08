@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1731004727 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\main.c
+1731038812 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\main.c
 	<stdio.h>
 	"lib.h"
 	"cache.h"
 
 1731004711 c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.h
 
-1731004748 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.c
+1731037331 source:c:\users\julia\documents\unlam\2024 segundo cuatrimestre\algoritmos y estructuras de datos\yo\tp\lru_cache\lib.c
 	"lib.h"
 	"funciones_para_genericos.h"
 	"cache.h"
